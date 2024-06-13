@@ -290,6 +290,10 @@ print(abrigo.listaQuantidadeDeCachorro(daRaca: .golden))
 // Funcionalidade 6
 print(abrigo.listaCachorrosEmOrdemAlfabetica())
 
+
+
+
+
 // Seu sistema aqui!
 enum Cargo {
     case monitor
@@ -343,19 +347,16 @@ class Escola {
         return "Os gastos com o cargo \(cargo.nomeFormal()) são de R$\(gastoTotal)."
     }
     
-    // Funcionalidade 5: Listar quantidades de colaboradores por cargo
     func listaQuantidadePorCargo(_ cargo: Cargo) -> String {
         let quantidade = colaboradores.filter { $0.cargo == cargo }.count
         return "Existem \(quantidade) colaborador(es) do cargo \(cargo.nomeFormal())."
     }
     
-    // Funcionalidade 6: Listar os nomes de todos os colaboradores em ordem alfabética
     func listaColaboradoresEmOrdemAlfabetica() -> [String] {
         return colaboradores.map { $0.nome }.sorted()
     }
 }
 
-// Exemplo de utilização do sistema da escola
 let colaboradores: [Colaborador] = [
     Colaborador(matricula: 0, nome: "João", cargo: .monitor, salarioMensal: 2000),
     Colaborador(matricula: 1, nome: "Maria", cargo: .professor, salarioMensal: 3000),
@@ -365,7 +366,6 @@ let colaboradores: [Colaborador] = [
 
 let escola = Escola(colaboradores: colaboradores)
 
-// Funcionalidades do sistema abaixo
 escola.adicionaColaborador(Colaborador(matricula: 4, nome: "Carlos", cargo: .monitor, salarioMensal: 1800))
 print(escola.listaColaboradoresEmOrdemAlfabetica())
 
@@ -450,6 +450,39 @@ escola1.adicionarFuncionario(professor1)
 escola1.adicionarFuncionario(professor2)
 
 // Agora você pode implementar lógica adicional para garantir que as regras sejam seguidas ao adicionar funcionários à escola.
+// Alteração no nome Escola para Escola2 apenas para cumprir tal desafio e não ter problemas com redeclaração com os outros desafios acima.
+class Escola2 {
+    var funcionarios = [Funcionario]()
+    
+    func adicionarFuncionario(_ funcionario: Funcionario) {
+        if funcionario is Diretor && obterDiretor() != nil {
+            print("Já existe um diretor na escola. Não é possível adicionar outro.")
+            return
+        }
+        
+        if funcionario is Coordenador || funcionario is Professor {
+            if obterDiretor() == nil {
+                print("Um diretor deve ser adicionado antes de coordenadores ou professores.")
+                return
+            }
+        }
+        
+        funcionarios.append(funcionario)
+    }
+    
+    func obterDiretor() -> Diretor? {
+        return funcionarios.compactMap { $0 as? Diretor }.first
+    }
+    
+    func obterCoordenadores() -> [Coordenador] {
+        return funcionarios.compactMap { $0 as? Coordenador }
+    }
+    
+    func obterProfessores() -> [Professor] {
+        return funcionarios.compactMap { $0 as? Professor }
+    }
+}
+
 
 
 /*:
